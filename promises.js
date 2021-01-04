@@ -13,29 +13,53 @@
 
 function getUser(id) {
     return new Promise((resolve, reject) => {
-    setTimeout(() => {
-        // console.log(id);
-        resolve({id:id, gitHubUserName:'Abir'});
-    }, 1500);
-});
-    
+        setTimeout(() => {
+            // console.log(id);
+            resolve({id:id, gitHubUserName:'Abir'});
+        }, 3000);
+    });   
 }
+
 function getRepositories(username) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             // console.log(username);
             resolve(['repo1', 'repo2', 'repo3']);
-        }, 1500);
+        }, 3000);
     });
 }
 function getCommits(repo) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            console.log(repo);
+            // console.log(repo);
             resolve({commit: 'Initial Commit'});
-        }, 1500);
+        }, 3000);
     });
 }
+
+const p1 = new Promise(resolve => {
+    setTimeout(() => {
+        // console.log('p1');
+        resolve({id:1, gitHubUserName:'Abir'});
+    }, 7500);
+});
+const p2 = new Promise(resolve => {
+    setTimeout(() => {
+        // console.log('p2');
+        resolve(['repo1', 'repo2', 'repo3']);
+    }, 500);
+});
+const p3 = new Promise(resolve => {
+    setTimeout(() => {
+        // console.log('p3');
+        resolve({commit: 'Initial Commit'});
+    }, 4500);
+});
+
+Promise.race([p1, p2, p3])
+    .then(result => {
+        console.log(result);
+    });
 
 // getUser(2)
 //   .then(user => getRepositories(user.gitHubUserName))
@@ -43,20 +67,18 @@ function getCommits(repo) {
 //   .then(commit => console.log(commit))
 //   .catch(err => console.log('Error', err.message));
 
-getUser(1)
-    .then(user => {
-        console.log(user);
-        getRepositories(user.gitHubUserName)
-        .then(rep => {
-            console.log(rep);
-            getCommits(rep[2])
-            .then(commit => console.log(commit))
-        })
-    }).catch(err => console.log(err.message));
+// getUser(1)
+//     .then(user => {
+//         console.log(user);
+//         getRepositories(user.gitHubUserName)
+//         .then(rep => {
+//             console.log(rep);
+//             getCommits(rep[2])
+//             .then(commit => console.log(commit))
+//         })
+//     }).catch(err => console.log(err.message)); 
     
-    
-    
-
+ 
 // getUser(1, (user) => {
 //     console.log('User details ', user);
 //     getRepositories(user.gitHubUserName, (repos) => {
